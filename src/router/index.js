@@ -19,14 +19,19 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
-    path: '/books',
-    name: 'books',
-    component: () => import(/* webpackChunkName: "books" */ '../views/Books.vue')
+    path: '/albums',
+    name: 'albums',
+    component: () => import(/* webpackChunkName: "albums" */ '../views/Albums.vue')
+  },
+  {
+    path: '/code',
+    name: 'code',
+    component: () => import(/* webpackChunkName: "code" */ '../views/Code.vue')
   }
 ]
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL,
   routes
 })
