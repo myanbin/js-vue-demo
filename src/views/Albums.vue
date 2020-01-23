@@ -1,12 +1,12 @@
 <template>
-  <div class="albums">
+  <div id="albums">
     <h1>音乐专辑管理器</h1>
     <a-table :columns="columns" :dataSource="data" :rowKey="record => record._id">
-      <template slot="singers" slot-scope="singers">
-        {{ singers[0].singer_name }} {{ singers.length > 1 ? `等 ${singers.length} 人` : `` }}
+      <template slot="artists" slot-scope="artists">
+        {{ artists[0].name }} {{ artists.length > 1 ? `等 ${artists.length} 人` : `` }}
       </template>
-      <template slot="public_time" slot-scope="public_time">
-        {{ public_time | date }}
+      <template slot="released_at" slot-scope="released_at">
+        {{ released_at | date }}
       </template>
       <template slot="action" slot-scope="action, record">
         <a @click="current = cloneDeep(record); readonly = true; visible = true">详细内容</a>
@@ -40,7 +40,7 @@
 
 <script>
 import cloneDeep from 'lodash.clonedeep';
-const baseurl = '/albums'
+const baseurl = 'http://localhost:3000/albums'
 
 const columns = [
   {
@@ -50,24 +50,24 @@ const columns = [
   },
   {
     title: '专辑名称',
-    dataIndex: 'album_name'
+    dataIndex: 'name'
   },
   {
     title: '发布时间',
-    dataIndex: 'public_time',
+    dataIndex: 'released_at',
     width: '12%',
     scopedSlots: { customRender: 'public_time' }
   },
   {
-    title: '价格',
-    dataIndex: 'price',
+    title: '流派',
+    dataIndex: 'genres',
     width: '10%',
   },
   {
-    title: '歌手',
-    dataIndex: 'singers',
+    title: '艺人',
+    dataIndex: 'artists',
     width: '12%',
-    scopedSlots: { customRender: 'singers' }
+    scopedSlots: { customRender: 'artists' }
   },
   {
     title: '操作',
@@ -86,9 +86,9 @@ export default {
       readonly: false,
       visible: false,
       current: {
-        album_name: null,
-        public_time: null,
-        price: null
+        name: null,
+        released_at: null,
+        genres: null
       }
     };
   },

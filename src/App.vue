@@ -4,9 +4,9 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
       <router-link to="/albums">音乐专辑管理器</router-link> |
-      <router-link to="/code">源代码</router-link>
+      <router-link to="/login">登录</router-link>
     </div>
-    <router-view/>
+    <router-view></router-view>
   </div>
 </template>
 
