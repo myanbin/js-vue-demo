@@ -11,6 +11,9 @@ const instance = axios.create({
 // Add a request interceptor
 instance.interceptors.request.use(function (config) {
   // Do something before request is sent
+  if (window.localStorage.getItem('token') !== null) {
+    config.headers.common['Authorization'] = 'Bearer ' + window.localStorage.getItem('token')
+  }
   return config
 }, function (error) {
   // Do something with request error

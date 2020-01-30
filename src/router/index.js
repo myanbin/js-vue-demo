@@ -3,6 +3,15 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
+const beforeEnterHook = (to, from, next) => {
+  window.console.log(to, from)
+  if (window.localStorage.getItem('token')) {
+    next()
+  } else {
+    next('/login')
+  }
+}
+
 const routes = [
   {
     path: '/',
@@ -15,21 +24,20 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    beforeEnter: beforeEnterHook
   },
   {
     path: '/albums',
     name: 'albums',
-    component: () => import(/* webpackChunkName: "albums" */ '../views/Albums.vue')
+    component: () => import(/* webpackChunkName: "albums" */ '../views/Albums.vue'),
+    beforeEnter: beforeEnterHook
   },
   {
     path: '/users',
     name: 'users',
     component: () => import(/* webpackChunkName: "cousersde" */ '../views/Users.vue'),
-    beforeEnter: (to, from, next) => {
-      window.console.log(to, from)
-      next()
-    }
+    beforeEnter: beforeEnterHook
   },
   {
     path: '/login',

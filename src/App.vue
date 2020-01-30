@@ -2,13 +2,24 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
       <router-link to="/albums">音乐专辑管理器</router-link> |
-      <router-link to="/login">登录</router-link>
+      <router-link to="/about" v-if="login">{{ username }}</router-link>
+      <router-link to="/login" v-else>Login</router-link>
     </div>
     <router-view></router-view>
   </div>
 </template>
+
+<script>
+export default {
+  data: () => {
+    return {
+      login: window.localStorage.getItem('token') !== null,
+      username: window.localStorage.getItem('username')
+    }
+  }
+}
+</script>
 
 <style>
 #app {
