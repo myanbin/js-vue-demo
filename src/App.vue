@@ -3,8 +3,9 @@
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/albums">音乐专辑管理器</router-link> |
-      <router-link to="/about" v-if="login">{{ username }}</router-link>
-      <router-link to="/login" v-else>Login</router-link>
+      <router-link to="/admin">管理中心</router-link> |
+      <router-link to="/about" v-if="login">关于我</router-link>
+      <router-link to="/login" v-else>登录</router-link>
     </div>
     <router-view></router-view>
   </div>
@@ -17,6 +18,11 @@ export default {
       login: window.localStorage.getItem('token') !== null,
       username: window.localStorage.getItem('username')
     }
+  },
+  created() {
+    setInterval(() => {
+      this.login = window.localStorage.getItem('token') !== null
+    }, 1000)
   }
 }
 </script>

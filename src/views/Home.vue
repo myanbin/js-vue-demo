@@ -1,13 +1,13 @@
 <template>
   <div id="home">
     <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="JavaScript 全栈式开发进阶"/>
+    <README title="JavaScript 全栈式开发进阶"/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import README from '@/components/README.vue'
 
 export default {
   name: 'home',
@@ -15,7 +15,7 @@ export default {
     return {};
   },
   components: {
-    HelloWorld
+    README
   }
 }
 </script>

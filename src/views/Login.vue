@@ -59,13 +59,13 @@ export default {
         window.console.log(res.data)
         window.localStorage.setItem('username', res.data.username)
         window.localStorage.setItem('token', res.data.token)
-        this.$message.info('登录成功')
         this.$router.push('/about')
       })
     },
     register() {
-      HTTP.post('/user/register', this.user).then(res => {
-        window.console.log(res.data)
+      HTTP.post('/user/register', this.user).then(() => {
+        this.$message.info('注册成功')
+        this.noAccount = false
       })
     }
   },
