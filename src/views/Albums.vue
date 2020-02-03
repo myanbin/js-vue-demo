@@ -155,12 +155,14 @@ export default {
       if (this.mode === 0) {
         HTTP.post(`/albums`, this.current).then(res => {
           this.albums.push(res.data)
+          this.albums2 = this.albums
           this.$message.info('专辑新增成功')
           this.visible = false
         })
       } else {
         HTTP.patch(`/albums/${this.current._id}`, this.current).then(res => {
           this.albums.splice(this.currentIndex, 1, { ...res.data, ...this.current })
+          this.albums2 = this.albums
           this.$message.info('专辑更新成功')
           this.visible = false
         })
@@ -185,6 +187,7 @@ export default {
         onOk: () => {
           HTTP.delete(`/albums/${album._id}`).then(() => {
             this.albums.splice(this.currentIndex, 1)
+            this.albums2 = this.albums
             this.$message.info('专辑删除成功')
             this.visible = false
           })
@@ -212,11 +215,13 @@ export default {
       if (this.artist2.length === 24) {
         HTTP.put(`/albums/${this.current._id}/artists/${this.artist2}`).then(res => {
           this.albums.splice(this.currentIndex, 1, { ...res.data })
+          this.albums2 = this.albums
           this.$message.info('追加艺人成功')
           this.visible2 = false
         })
       } else {
         HTTP.post('/artists', { name: this.artist2 }).then(res => {
+          this.artists.push(res.data)
           HTTP.put(`/albums/${this.current._id}/artists/${res.data._id}`).then(res => {
             this.albums.splice(this.currentIndex, 1, { ...res.data })
             this.$message.info('追加艺人成功')
@@ -250,12 +255,18 @@ export default {
       return isJPG && isLt2M;
     },
     handleSearch() {
-      this.albums = this.albums.filter(album => album.name.includes(this.searchText))
+      if (this.searchText) {
+        this.albums = this.albums2.filter(album => album.name.includes(this.searchText))
+      } else {
+        this.albums = this.albums2
+      }
+      
     }
   },
   created() {
     HTTP.get(`/albums`).then(res => {
       this.albums = res.data
+      this.albums2 = this.albums
     })
     HTTP.get('/artists').then(res => {
       this.artists = res.data

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
+      <router-link to="/">首页</router-link> |
       <router-link to="/albums">音乐专辑管理器</router-link> |
       <router-link to="/admin">管理中心</router-link> |
       <router-link to="/about" v-if="login">关于我</router-link>

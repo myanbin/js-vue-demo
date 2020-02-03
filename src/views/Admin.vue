@@ -1,13 +1,29 @@
 <template>
   <div id="about">
     <h1>管理中心</h1>
-    <p class="hero">权力越大，责任越大。 —— 蜘蛛侠</p>
-    <h2>数据统计</h2>
     <a-row style="margin-bottom: 14px">
-      <a-col :span="6"><a-statistic title="注册用户数" :value="users.length" /></a-col>
-      <a-col :span="6"><a-statistic title="音乐专辑数" :value="albums.length" /></a-col>
-      <a-col :span="6"><a-statistic title="音乐艺人数" :value="artists.length" /></a-col>
+      <a-col :span="6"><a-statistic title="注册用户数" :value="users.length" :class="{ active: current === 'users' }" /></a-col>
+      <a-col :span="6"><a-statistic title="音乐专辑数" :value="albums.length" :class="{ active: current === 'albums' }" /></a-col>
+      <a-col :span="6"><a-statistic title="音乐艺人数" :value="artists.length" :class="{ active: current === 'artists' }" /></a-col>
     </a-row>
+    <a-table :columns="columns" :dataSource="users" :pagination="false" :rowKey="user => user._id">
+      <template slot="index" slot-scope="_id">
+        {{ _id | short }}
+      </template>
+      <template slot="admin" slot-scope="admin">
+        {{ admin ? '是' : '否' }}
+      </template>
+      <template slot="favorites" slot-scope="favorites">
+        {{ favorites.length }}
+      </template>
+      <template slot="created_at" slot-scope="created_at">
+        {{ created_at }}
+      </template>
+      <template slot="activity" slot-scope="activity">
+        {{ activity }}
+      </template>
+    </a-table>
+    <p class="hero">权力越大，责任越大。 —— 蜘蛛侠</p>
     <h2>数据库重建</h2>
     <p>点击下面按钮，可以重置音乐专辑管理器的数据</p>
     <p><a-button type="danger" ghost @click="rebuild">重置数据</a-button></p>
@@ -17,27 +33,67 @@
 <script>
 import HTTP from '../utils'
 
+const columns = [
+  {
+    title: '#',
+    dataIndex: '_id',
+    width: '20px',
+    scopedSlots: { customRender: 'index' }
+  },
+  {
+    title: '用户名',
+    dataIndex: 'username'
+  },
+  {
+    title: '是否管理员',
+    dataIndex: 'admin',
+    width: '10%',
+    scopedSlots: { customRender: 'admin' }
+  },
+  {
+    title: '收藏专辑数',
+    dataIndex: 'favorites',
+    width: '10%',
+    scopedSlots: { customRender: 'favorites' }
+  },
+  {
+    title: '注册时间',
+    dataIndex: 'created_at',
+    scopedSlots: { customRender: 'created_at' }
+  },
+  {
+    title: '最后登录设备',
+    dataIndex: 'activity',
+    scopedSlots: { customRender: 'activity' }
+  }
+]
+
 export default {
   name: 'admin',
   data: () => {
     return {
+      columns,
+      current: 'users',
       albums: [],
       users: [],
       artists: []
     }
   },
   created() {
-    HTTP.get(`/albums`).then(res => {
-      this.albums = res.data
-    })
-    HTTP.get('/users').then(res => {
-      this.users = res.data
-    })
-    HTTP.get('/artists').then(res => {
-      this.artists = res.data
-    })
+    this.load()
   },
   methods: {
+    load() {
+      HTTP.get(`/albums`).then(res => {
+        this.albums = res.data
+      })
+      HTTP.get('/users').then(res => {
+        this.users = res.data
+      })
+      HTTP.get('/artists').then(res => {
+        this.artists = res.data
+      })
+    },
     rebuild() {
       this.$confirm({
         title: '确定要重置数据吗？',
@@ -48,9 +104,15 @@ export default {
         onOk: () => {
           HTTP.put('/admin/rebuild').then(() => {
             this.$message.info('数据重置成功')
+            this.load()
           })
         }
       })
+    }
+  },
+  filters: {
+    short (value) {
+      return value.slice(-6)
     }
   }
 }
@@ -65,5 +127,12 @@ export default {
 .ant-statistic {
   text-align: left;
   padding: 10px;
+  cursor: pointer;
+}
+.ant-table-wrapper {
+  margin-bottom: 14px;
+}
+.active {
+  color: #1890ff;
 }
 </style>
