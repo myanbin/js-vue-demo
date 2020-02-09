@@ -1,24 +1,15 @@
-# vue-demo
+# 音乐专辑管理器 - Vue 前端
 
-## Project setup
-```
-npm install
-```
+如想查看配套的前端项目，请移步：https://github.com/myanbin/js-express-app
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+主要第三方模块有：vue、vue router、axios、ant design vue 等
 
-### Compiles and minifies for production
-```
-npm run build
+## 开发与打包
+
+```bash
+$ npm install
+$ npm run serve
+$ npm run build
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## 运行截图

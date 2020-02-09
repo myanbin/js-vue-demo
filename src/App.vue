@@ -38,11 +38,16 @@ export default {
 
 #nav {
   padding: 20px;
+  background: rgb(63,81,181);
+  background: linear-gradient(90deg, rgba(63,81,181,1) 0%, rgba(9,57,121,1) 100%);
+  font-size: 20px;
+  color: #ccc;
+  text-align: left;
 }
 
 #nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: #fff;
   text-decoration: none;
   line-height: 2rem;
 }

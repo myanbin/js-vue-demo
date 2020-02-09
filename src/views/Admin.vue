@@ -5,6 +5,7 @@
       <a-col :span="6"><a-statistic title="注册用户数" :value="users.length" :class="{ active: current === 'users' }" /></a-col>
       <a-col :span="6"><a-statistic title="音乐专辑数" :value="albums.length" :class="{ active: current === 'albums' }" /></a-col>
       <a-col :span="6"><a-statistic title="音乐艺人数" :value="artists.length" :class="{ active: current === 'artists' }" /></a-col>
+      <a-col :span="6"><a-statistic title="程序已运行" :value="appAge" /></a-col>
     </a-row>
     <a-table :columns="columns" :dataSource="users" :pagination="false" :rowKey="user => user._id">
       <template slot="index" slot-scope="_id">
@@ -76,11 +77,27 @@ export default {
       current: 'users',
       albums: [],
       users: [],
-      artists: []
+      artists: [],
+      appAge: 'loading ...'
     }
   },
   created() {
     this.load()
+    const second = 1000
+    const minute = second * 60
+    const hour = minute * 60
+    const day = hour * 24
+
+    HTTP.get('/dateofbirth').then(res => {
+      const dateOfBirth = new Date(res.data).getTime()
+      setInterval(() => {
+        const now = new Date().getTime()
+        const distance = now - dateOfBirth
+        const message = `${Math.floor(distance / (day))} 天 ${Math.floor((distance % (day)) / (hour))} 时 ${Math.floor((distance % (hour)) / (minute))} 分 ${Math.floor((distance % (minute)) / second)} 秒`
+        this.appAge = message
+      }, 1000)
+    })
+    
   },
   methods: {
     load() {
