@@ -1,9 +1,11 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">首页</router-link> |
-      <router-link to="/albums">音乐专辑管理器</router-link> |
-      <router-link to="/admin">管理中心</router-link> |
+      <router-link to="/">首页</router-link>
+      <router-link to="/discover">发现</router-link>
+      <router-link to="/albums">专辑管理器</router-link>
+      <router-link to="/admin">管理中心</router-link>
+      <span :style="{ flex: 1 }"></span>
       <router-link to="/about" v-if="login">关于我</router-link>
       <router-link to="/login" v-else>登录</router-link>
     </div>
@@ -37,26 +39,27 @@ export default {
 }
 
 #nav {
-  padding: 20px;
-  background: rgb(63,81,181);
-  background: linear-gradient(90deg, rgba(63,81,181,1) 0%, rgba(9,57,121,1) 100%);
-  font-size: 20px;
+  padding: 0 20px;
+  background: #000;
+  height: 60px;
   color: #ccc;
   text-align: left;
+  display: flex;
 }
 
 #nav a {
-  font-weight: bold;
-  color: #fff;
+  color: #ccc;
   text-decoration: none;
-  line-height: 2rem;
+  line-height: 60px;
+  padding: 0 20px;
+  font-size: 20px;
 }
 
 #nav a.router-link-exact-active {
-  color: #42b983;
+  color: #fff;
 }
 
-#albums, #users, #login, #about, #home {
+#albums, #users, #login, #about, #home, #discover, #admin {
   padding: 20px;
 }
 </style>

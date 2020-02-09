@@ -1,5 +1,5 @@
 <template>
-  <div id="about">
+  <div id="admin">
     <h1>管理中心</h1>
     <a-row style="margin-bottom: 14px">
       <a-col :span="6"><a-statistic title="注册用户数" :value="users.length" :class="{ active: current === 'users' }" /></a-col>
